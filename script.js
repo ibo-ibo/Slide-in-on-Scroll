@@ -1,5 +1,8 @@
 "use strict";
 
+const images = document.querySelectorAll("img");
+console.log(images);
+
 function debounce(func, wait = 20, immediate = true) {
   let timeout;
   return function () {
