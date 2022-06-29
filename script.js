@@ -1,9 +1,21 @@
 "use strict";
 
-const images = document.querySelectorAll("img");
-console.log(images);
+const sliderImages = document.querySelectorAll(".slide-in");
+console.log(sliderImages);
 
-function debounce(func, wait = 20, immediate = true) {
+const handleSlide = function () {
+  sliderImages.forEach((img) => {
+    const slideAt = window.scrollY + window.innerHeight - img.height / 2;
+    const imgBottom = img.offsetTop + img.height;
+    const isHalfShown = slideAt > img.offsetTop;
+    const isNotScrolledPast = window.scrollY < imgBottom;
+    if (isHalfShown && isNotScrolledPast) {
+      img.classList.add("active");
+    }
+  });
+};
+
+const debounce = function (func, wait = 20, immediate = true) {
   let timeout;
   return function () {
     const context = this,
@@ -17,4 +29,6 @@ function debounce(func, wait = 20, immediate = true) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-}
+};
+
+window.addEventListener("scroll", debounce(handleSlide));
